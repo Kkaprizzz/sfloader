@@ -1,0 +1,89 @@
+{
+  "name": "sfloader",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SFLoader — настольный загрузчик видео",
+  "author": {
+    "name": "SFLoader",
+    "email": "sacha12765@gmail.com"
+  },
+  "homepage": "https://sfloader.app",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "start": "npm run electron:dev",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "setup:bin": "bash scripts/setup-bin.sh",
+    "electron:dev": "concurrently -k -n vite,electron \"vite\" \"wait-on tcp:127.0.0.1:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron . --ozone-platform=x11\"",
+    "electron:build": "vite build && electron-builder --linux"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.3.0",
+    "i18next": "^25.8.0",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "lucide-react": "^0.563.0",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-i18next": "^16.5.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react-swc": "^4.2.2",
+    "autoprefixer": "^10.4.23",
+    "concurrently": "^10.0.0",
+    "cross-env": "^10.1.0",
+    "electron": "^42.3.0",
+    "electron-builder": "^26.8.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "vite": "^7.2.4",
+    "wait-on": "^9.0.10"
+  },
+  "build": {
+    "appId": "com.sfloader.app",
+    "productName": "SFLoader",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "**/node_modules/ffmpeg-static/**"
+    ],
+    "extraResources": [
+      {
+        "from": "resources/bin",
+        "to": "bin",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "AudioVideo",
+      "icon": "build/icon.png",
+      "maintainer": "SFLoader <sacha12765@gmail.com>"
+    }
+  }
+}

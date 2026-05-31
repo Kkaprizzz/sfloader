@@ -1,0 +1,164 @@
+.main-downloader {
+  max-width: 800px;
+  margin: 40px auto;
+  position: relative;
+}
+
+.dl-form {
+  display: flex;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  padding: 6px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: 0.3s ease;
+}
+
+.dl-form:focus-within {
+  border-color: rgba(124, 77, 255, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 20px rgba(124, 77, 255, 0.1);
+}
+
+.dl-input-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  position: relative;
+}
+
+
+.dl-icon {
+  color: #444;
+  transition: 0.3s;
+  margin-right: 12px; 
+  flex-shrink: 0;
+}
+
+.dl-form:focus-within .dl-icon {
+  color: #7c4dff;
+}
+
+.dl-input-container input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  padding: 10px 0;
+  padding-right: 35px; 
+}
+
+.dl-input-container input::placeholder {
+  color: #333;
+}
+
+.dl-button {
+  background: #7c4dff;
+  color: #fff;
+  border: none;
+  padding: 0 25px;
+  height: 44px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 8px;
+  transition: 0.2s;
+  box-shadow: 0 4px 15px rgba(124, 77, 255, 0.3);
+  white-space: nowrap;
+}
+
+.dl-button:hover:not(:disabled) {
+  background: #6a3de8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(124, 77, 255, 0.4);
+}
+
+.dl-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dl-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.dl-hint {
+  margin-top: 15px;
+  font-size: 0.8rem;
+  color: #333;
+  text-align: center;
+}
+
+.dl-hint span { color: #555; }
+
+
+@media (max-width: 600px) {
+  .dl-form {
+    flex-direction: column;
+    background: transparent;
+    padding: 0;
+    border: none;
+    backdrop-filter: none;
+  }
+
+  
+  .dl-input-container {
+    background: rgba(255, 255, 255, 0.03);
+    height: 56px; 
+    border-radius: 18px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+  }
+
+  
+  .dl-button {
+    width: 100%;
+    height: 56px; 
+    border-radius: 18px;
+    font-size: 1rem;
+    justify-content: center; 
+  }
+
+  .dl-input-container input {
+    font-size: 1rem; 
+  }
+}
+
+.clear-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  
+  
+  opacity: 0;
+  transform: translateY(-50%) scale(0.8);
+  pointer-events: none; 
+}
+
+.clear-btn.visible {
+  
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  pointer-events: auto; 
+}
+
+.clear-btn:hover {
+  color: #fff;
+}

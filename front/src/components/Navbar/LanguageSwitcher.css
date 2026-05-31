@@ -1,0 +1,31 @@
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.lang-switcher button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  opacity: 0.5;
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.lang-switcher button.active {
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 1;
+}
+
+.separator {
+  width: 1px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+}

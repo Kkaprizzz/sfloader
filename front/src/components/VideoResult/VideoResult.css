@@ -1,0 +1,251 @@
+.video-result-container {
+  max-width: 1000px;
+  margin: 30px auto 80px;
+  animation: slideIn 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.video-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 35px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.video-preview {
+  width: 600px;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  flex-shrink: 0;
+  background: #000;
+}
+
+.video-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.duration-badge {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+}
+
+.video-details {
+  padding: 30px;
+  flex: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.source-badge {
+  background: rgba(124, 77, 255, 0.2);
+  color: #7c4dff;
+  padding: 5px 14px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-block;
+  border: 1px solid rgba(124, 77, 255, 0.2);
+}
+
+.video-details h3 {
+  margin: 0 0 25px 0;
+  font-size: 1.1rem;
+  color: #fff;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.quality-item {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 12px 18px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.q-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.quality-item .spin {
+  position: relative;
+  z-index: 1;
+}
+
+.q-progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(124, 77, 255, 0.35);
+  transition: width 0.2s ease;
+  z-index: 0;
+}
+
+.quality-item.active {
+  border-color: rgba(124, 77, 255, 0.5);
+  pointer-events: none;
+}
+
+.quality-item:hover {
+  background: rgba(124, 77, 255, 0.15);
+  border-color: rgba(124, 77, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.q-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.q-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.q-size {
+  font-size: 0.7rem;
+  opacity: 0.4;
+}
+
+.ad-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  z-index: 10000;
+}
+
+.blurred {
+  filter: blur(4px) brightness(0.7);
+  pointer-events: none;
+}
+
+.quality-item.downloading {
+  background: var(--accent, #6c63ff22);
+  border-color: var(--accent, #6c63ff);
+  pointer-events: none;
+}
+
+.quality-item.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dl-status {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+  border-radius: 14px;
+}
+
+.dl-status.error {
+  background: rgba(255, 76, 76, 0.12);
+  border: 1px solid rgba(255, 76, 76, 0.3);
+  color: #ff8a8a;
+}
+
+.dl-status.success {
+  background: rgba(46, 161, 123, 0.12);
+  border: 1px solid rgba(46, 161, 123, 0.3);
+  color: #4fd1a5;
+}
+
+.dl-status span {
+  flex: 1;
+  word-break: break-word;
+}
+
+.reveal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: 0.2s;
+}
+
+.reveal-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 850px) {
+  .video-card {
+    flex-direction: column;
+  }
+
+  .video-preview {
+    width: 100%;
+  }
+}

@@ -1,0 +1,27 @@
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer {
+  text-align: center;
+  padding: 40px 0;
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+
+.app-error {
+  max-width: 700px;
+  margin: 20px auto 0;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(255, 76, 76, 0.12);
+  border: 1px solid rgba(255, 76, 76, 0.3);
+  color: #ff8a8a;
+  font-size: 0.9rem;
+  text-align: center;
+  word-break: break-word;
+}

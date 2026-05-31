@@ -6,18 +6,19 @@
 
 .dl-form {
   display: flex;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: 6px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
   transition: 0.3s ease;
 }
 
 .dl-form:focus-within {
-  border-color: rgba(124, 77, 255, 0.4);
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: 0 0 20px rgba(124, 77, 255, 0.1);
+  border-color: var(--glass-border-hover);
+  background: var(--glass-bg-strong);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
 }
 
 .dl-input-container {
@@ -30,14 +31,14 @@
 
 
 .dl-icon {
-  color: #444;
+  color: rgba(255, 255, 255, 0.35);
   transition: 0.3s;
-  margin-right: 12px; 
+  margin-right: 12px;
   flex-shrink: 0;
 }
 
 .dl-form:focus-within .dl-icon {
-  color: #7c4dff;
+  color: var(--accent-primary);
 }
 
 .dl-input-container input {
@@ -53,13 +54,15 @@
 }
 
 .dl-input-container input::placeholder {
-  color: #333;
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .dl-button {
-  background: #7c4dff;
+  background: var(--accent-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: #fff;
-  border: none;
+  border: 1px solid var(--accent-glass-border);
   padding: 0 25px;
   height: 44px;
   border-radius: 14px;
@@ -68,17 +71,18 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   gap: 8px;
   transition: 0.2s;
-  box-shadow: 0 4px 15px rgba(124, 77, 255, 0.3);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
   white-space: nowrap;
 }
 
 .dl-button:hover:not(:disabled) {
-  background: #6a3de8;
+  background: var(--accent-glass-hover);
+  border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(124, 77, 255, 0.4);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
 }
 
 .dl-button:disabled {
@@ -98,11 +102,11 @@
 .dl-hint {
   margin-top: 15px;
   font-size: 0.8rem;
-  color: #333;
+  color: rgba(255, 255, 255, 0.3);
   text-align: center;
 }
 
-.dl-hint span { color: #555; }
+.dl-hint span { color: rgba(255, 255, 255, 0.5); }
 
 
 @media (max-width: 600px) {
@@ -142,7 +146,7 @@
   position: absolute;
   right: 15px;
   top: 50%;
-  color: #555;
+  color: rgba(255, 255, 255, 0.4);
   cursor: pointer;
   transition: all 0.2s ease-out;
   

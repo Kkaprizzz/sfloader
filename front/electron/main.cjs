@@ -26,7 +26,8 @@ function createWindow() {
     height: 800,
     minWidth: 800,
     minHeight: 600,
-    backgroundColor: '#0F111A',
+    backgroundColor: '#050507',
+    frame: false,
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
@@ -48,6 +49,9 @@ function createWindow() {
     }
     return { action: 'deny' };
   });
+
+  mainWindow.on('maximize', () => mainWindow.webContents.send('window:maximized', true));
+  mainWindow.on('unmaximize', () => mainWindow.webContents.send('window:maximized', false));
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -79,6 +83,19 @@ ipcMain.handle('video:download', async (event, opts) => {
 ipcMain.handle('shell:openPath', async (_event, target) => {
   return shell.showItemInFolder(target);
 });
+
+ipcMain.handle('window:minimize', () => mainWindow?.minimize());
+
+ipcMain.handle('window:toggleMaximize', () => {
+  if (!mainWindow) return false;
+  if (mainWindow.isMaximized()) mainWindow.unmaximize();
+  else mainWindow.maximize();
+  return mainWindow.isMaximized();
+});
+
+ipcMain.handle('window:close', () => mainWindow?.close());
+
+ipcMain.handle('window:isMaximized', () => !!mainWindow?.isMaximized());
 
 app.whenReady().then(() => {
   createWindow();

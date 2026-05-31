@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { useTranslation } from 'react-i18next';
-import Navbar from './components/Navbar/Navbar';
+import TitleBar from './components/TitleBar/TitleBar';
 import Hero from './components/Hero/Hero';
 import Downloader from './components/Downloader/Downloader';
 import Features from './components/Features/Features';
@@ -32,9 +32,9 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <Navbar onSupportClick={() => setIsModalOpen(true)} />
-
+    <>
+      <TitleBar onSupportClick={() => setIsModalOpen(true)} />
+      <div className="app-container">
       <main>
         <Hero />
         <Downloader onDownload={handleDownload} isLoading={loading} />
@@ -47,11 +47,12 @@ function App() {
         <p>{t('footerText', { year: new Date().getFullYear() })}</p>
       </footer>
 
-      <SupportModal 
-        isOpen={isModalOpen} 
+      <SupportModal
+        isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-    </div>
+      </div>
+    </>
   );
 }
 

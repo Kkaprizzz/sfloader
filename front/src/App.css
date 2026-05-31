@@ -1,7 +1,7 @@
 .app-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 44px 20px 0;
   width: 100%;
   box-sizing: border-box;
 }
@@ -19,6 +19,8 @@
   padding: 14px 18px;
   border-radius: 16px;
   background: rgba(255, 76, 76, 0.12);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid rgba(255, 76, 76, 0.3);
   color: #ff8a8a;
   font-size: 0.9rem;

@@ -139,12 +139,17 @@ class DownloadManager extends EventEmitter {
     this.procs.set(task.id, proc);
     this.changed();
 
+    // Иначе многобайтная буква на стыке чанков превращается в «�» — и путь
+    // файла в истории указывает в никуда.
+    proc.stdout.setEncoding('utf8');
+    proc.stderr.setEncoding('utf8');
+
     let buffer = '';
     let stderr = '';
     let lastEmit = 0;
 
     proc.stdout.on('data', (chunk) => {
-      buffer += chunk.toString();
+      buffer += chunk;
       const lines = buffer.split(/\r?\n/);
       buffer = lines.pop();
       for (const line of lines) {
@@ -176,7 +181,7 @@ class DownloadManager extends EventEmitter {
         }
       }
     });
-    proc.stderr.on('data', (chunk) => { stderr += chunk.toString(); });
+    proc.stderr.on('data', (chunk) => { stderr += chunk; });
 
     proc.on('error', (err) => {
       task._stop = task._stop || 'error';
@@ -209,7 +214,16 @@ class DownloadManager extends EventEmitter {
     });
   }
 
+  // Путь из --print мог прийти искажённым; тогда берём тот, под которым мы
+  // сами назвали файл (-o baseName.%(ext)s, расширение задаёт формат).
+  resolveFile(task) {
+    if (task.filePath && fs.existsSync(task.filePath)) return task.filePath;
+    const expected = path.join(task.folder, `${task.baseName}.${task.kind === 'audio' ? 'mp3' : 'mp4'}`);
+    return fs.existsSync(expected) ? expected : task.filePath;
+  }
+
   finish(task) {
+    task.filePath = this.resolveFile(task);
     let size = null;
     try {
       size = fs.statSync(task.filePath).size;
@@ -229,6 +243,8 @@ class DownloadManager extends EventEmitter {
       height: task.height,
       formatId: task.formatId,
       filePath: task.filePath,
+      folder: task.folder,
+      baseName: task.baseName,
       size,
       finishedAt: Date.now(),
     };

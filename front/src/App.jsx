@@ -7,6 +7,7 @@ import ResultPanel from './components/ResultPanel/ResultPanel';
 import QueueList from './components/Lists/QueueList';
 import HistoryList from './components/Lists/HistoryList';
 import SettingsDialog from './components/Settings/SettingsDialog';
+import Splash from './components/Splash';
 
 const api = window.api;
 
@@ -35,9 +36,16 @@ function App() {
   const [ytdlp, setYtdlp] = useState({ state: 'idle' });
   const [barDismissed, setBarDismissed] = useState(false);
 
+  // Экран загрузки висит, пока не придут очередь и история, — иначе окно
+  // на миг показывает пустые списки.
+  const [booted, setBooted] = useState(false);
+
   useEffect(() => {
-    api.queue.list().then(setTasks);
-    api.settings.get().then(setSettings);
+    Promise.allSettled([
+      api.queue.list().then(setTasks),
+      api.history.list().then(setHistory),
+      api.settings.get().then(setSettings),
+    ]).then(() => setBooted(true));
     api.app.version().then(setAppVersion);
     api.app.updateStatus().then(setAppUpdate);
     api.ytdlp.status().then(setYtdlp);
@@ -51,10 +59,7 @@ function App() {
 
   const refreshHistory = useCallback(() => api.history.list().then(setHistory), []);
 
-  useEffect(() => {
-    refreshHistory();
-    return api.history.onChanged(refreshHistory);
-  }, [refreshHistory]);
+  useEffect(() => api.history.onChanged(refreshHistory), [refreshHistory]);
 
   const flash = (text) => {
     clearTimeout(hintTimer.current);
@@ -116,6 +121,8 @@ function App() {
     !barDismissed &&
     (['available', 'downloading', 'ready'].includes(appUpdate.state) ||
       (appUpdate.state === 'error' && appUpdate.version));
+
+  if (!booted) return <Splash />;
 
   return (
     <div className="app">

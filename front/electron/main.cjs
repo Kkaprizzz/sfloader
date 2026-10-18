@@ -123,6 +123,8 @@ function createWindow() {
     minWidth: 800,
     minHeight: 600,
     backgroundColor: '#161617',
+    // Показываем, когда отрисован экран загрузки из index.html, а не пустое окно.
+    show: false,
     frame: false,
     autoHideMenuBar: true,
     icon: iconPath(),
@@ -133,6 +135,17 @@ function createWindow() {
       sandbox: false,
     },
   });
+
+  const win = mainWindow;
+  let revealed = false;
+  const reveal = () => {
+    if (revealed || win.isDestroyed()) return;
+    revealed = true;
+    win.show();
+  };
+  mainWindow.once('ready-to-show', reveal);
+  // Подстраховка: на некоторых связках Linux ready-to-show не приходит.
+  setTimeout(reveal, 3000);
 
   if (isDev) {
     mainWindow.loadURL(DEV_SERVER_URL);
@@ -244,7 +257,7 @@ app.on('second-instance', showWindow);
 
 app.whenReady().then(async () => {
   settings = new Settings();
-  history = new History();
+  history = new History({ folder: () => settings.get().folder });
   manager = new DownloadManager({ settings, history });
   ytdlpUpdater = new YtDlpUpdater();
   appUpdater = new AppUpdater({

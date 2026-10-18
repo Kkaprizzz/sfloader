@@ -51,8 +51,10 @@ function runtimeArgs() {
   return ['--js-runtimes', `node:${process.execPath}`, '--ffmpeg-location', ffmpegPath()];
 }
 
+// Без этого yt-dlp на Windows пишет в pipe в кодировке консоли (cp1251),
+// и путь с кириллицей из --print приходит битым.
 function runtimeEnv() {
-  return { ...process.env, ELECTRON_RUN_AS_NODE: '1' };
+  return { ...process.env, ELECTRON_RUN_AS_NODE: '1', PYTHONIOENCODING: 'utf-8', PYTHONUTF8: '1' };
 }
 
 function binaryVersion(file) {
@@ -190,6 +192,7 @@ function downloadArgs(task) {
     '--no-playlist',
     '--newline',
     '--no-warnings',
+    '--encoding', 'utf-8',
     '--progress',
     '--progress-template', PROGRESS_TEMPLATE,
     '--print', 'after_move:SFLF %(filepath)s',

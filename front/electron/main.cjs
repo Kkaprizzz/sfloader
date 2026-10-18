@@ -18,7 +18,18 @@ if (
   (process.env.XDG_SESSION_TYPE === 'wayland' || process.env.WAYLAND_DISPLAY) &&
   !process.argv.includes('--ozone-platform=x11')
 ) {
-  app.relaunch({ args: process.argv.slice(1).concat('--ozone-platform=x11') });
+  // Внутри AppImage process.execPath указывает во временное монтирование,
+  // которое исчезнет вместе с этим процессом, а app.relaunch с AppImage
+  // не работает вовсе. Поэтому запускаем сам .AppImage отдельным процессом:
+  // у него будет своё монтирование.
+  const { spawn } = require('node:child_process');
+  const env = { ...process.env };
+  delete env.ELECTRON_RUN_AS_NODE;
+  spawn(process.env.APPIMAGE || process.execPath, process.argv.slice(1).concat('--ozone-platform=x11'), {
+    detached: true,
+    stdio: 'ignore',
+    env,
+  }).unref();
   app.exit(0);
   return;
 }

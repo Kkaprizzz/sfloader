@@ -10,16 +10,75 @@
   overflow-y: auto;
 }
 
-.app-hint {
-  margin: 0;
-  padding: 16px 20px;
-  color: var(--text-3);
-}
-
 .app-error {
+  flex: none;
   padding: 12px 20px;
   color: var(--danger);
   box-shadow: inset 3px 0 0 var(--danger);
   border-bottom: 1px solid var(--line);
   overflow-wrap: anywhere;
+}
+
+.tabs {
+  flex: none;
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  height: 40px;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-2);
+  font-weight: 500;
+  transition: color var(--t-ui) var(--ease);
+}
+
+.tab:hover,
+.tab[aria-selected='true'] {
+  color: var(--text);
+}
+
+.tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms var(--ease);
+}
+
+.tab[aria-selected='true']::after {
+  transform: scaleX(1);
+}
+
+.tab-count {
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.tabs-action {
+  margin-left: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-3);
+  font-size: 13px;
+  transition: color var(--t-ui) var(--ease);
+}
+
+.tabs-action:hover {
+  color: var(--danger);
 }

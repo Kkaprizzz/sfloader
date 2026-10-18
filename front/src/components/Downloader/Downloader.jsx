@@ -1,36 +1,34 @@
-import { useState } from 'react';
 import Icon from '../Icon';
 import './Downloader.css';
 
-const Downloader = ({ onDownload, isLoading }) => {
-  const [url, setUrl] = useState('');
-
+const Downloader = ({ url, onUrlChange, onSubmit, isLoading, inputRef }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!url || isLoading) return;
-    onDownload(url);
+    if (!url.trim() || isLoading) return;
+    onSubmit(url.trim());
   };
 
   return (
     <form className="linkbar" onSubmit={handleSubmit}>
       <div className="linkbar-field">
         <input
+          ref={inputRef}
           type="text"
           placeholder="Ссылка на видео"
           aria-label="Ссылка на видео"
           value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={(e) => onUrlChange(e.target.value)}
           disabled={isLoading}
           spellCheck={false}
         />
         {url && !isLoading && (
-          <button type="button" className="linkbar-clear" onClick={() => setUrl('')} aria-label="Очистить">
+          <button type="button" className="linkbar-clear" onClick={() => onUrlChange('')} aria-label="Очистить">
             <Icon name="close" size={14} />
           </button>
         )}
       </div>
 
-      <button className="linkbar-submit" type="submit" disabled={isLoading || !url}>
+      <button className="linkbar-submit" type="submit" disabled={isLoading || !url.trim()}>
         {isLoading ? 'Ищу…' : 'Найти'}
       </button>
 

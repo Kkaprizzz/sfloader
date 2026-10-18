@@ -1,0 +1,104 @@
+/* Общие строки очереди и истории. */
+
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 12px 0 20px;
+  border-bottom: 1px solid var(--line);
+  transition: background var(--t-ui) var(--ease);
+}
+
+.row:hover {
+  background: var(--surface);
+}
+
+.row-thumb {
+  width: 64px;
+  height: 36px;
+  object-fit: cover;
+  background: var(--surface-2);
+  border-radius: 2px;
+}
+
+.row-main {
+  min-width: 0;
+}
+
+.row-title {
+  margin: 0;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row-meta {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+
+.row-meta .is-accent {
+  color: var(--accent);
+}
+
+.row-meta .is-danger {
+  color: var(--danger);
+}
+
+.row-side {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.row-percent {
+  min-width: 48px;
+  margin-right: 8px;
+  text-align: right;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.row-bar {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  transition: width 200ms linear;
+}
+
+.row.is-paused .row-bar {
+  background: var(--line-strong);
+}
+
+.row.is-missing .row-thumb,
+.row.is-missing .row-title {
+  opacity: 0.45;
+}
+
+.row.is-missing .row-thumb {
+  filter: grayscale(1);
+}
+
+.list-empty {
+  margin: 0;
+  padding: 16px 20px;
+  color: var(--text-3);
+}

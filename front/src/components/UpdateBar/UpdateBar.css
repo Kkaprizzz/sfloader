@@ -1,0 +1,57 @@
+.updatebar {
+  flex: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 32px;
+  padding: 0 8px 0 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.updatebar.is-error {
+  color: var(--danger);
+}
+
+.updatebar-action {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.updatebar-action:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.updatebar-close {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-3);
+  transition: color var(--t-ui) var(--ease);
+}
+
+.updatebar-close:hover {
+  color: var(--text);
+}
+
+.updatebar-fill {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+  transition: width 200ms linear;
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Icon from '../Icon';
 import './TitleBar.css';
 
 const GLYPHS = {
@@ -19,7 +20,7 @@ const Glyph = ({ name }) => (
   </svg>
 );
 
-const TitleBar = () => {
+const TitleBar = ({ onSettings }) => {
   const wc = window.api?.windowControls;
   const [maximized, setMaximized] = useState(false);
 
@@ -35,23 +36,29 @@ const TitleBar = () => {
         <span>sf</span>loader
       </div>
 
-      {wc && (
-        <div className="win-controls">
-          <button className="win-btn" onClick={() => wc.minimize()} aria-label="Свернуть">
-            <Glyph name="minimize" />
-          </button>
-          <button
-            className="win-btn"
-            onClick={() => wc.toggleMaximize()}
-            aria-label={maximized ? 'Восстановить' : 'Развернуть'}
-          >
-            <Glyph name={maximized ? 'restore' : 'maximize'} />
-          </button>
-          <button className="win-btn win-close" onClick={() => wc.close()} aria-label="Закрыть">
-            <Glyph name="close" />
-          </button>
-        </div>
-      )}
+      <div className="win-controls">
+        <button className="win-btn tb-settings" onClick={onSettings} aria-label="Настройки" title="Настройки">
+          <Icon name="gear" size={16} />
+        </button>
+
+        {wc && (
+          <>
+            <button className="win-btn" onClick={() => wc.minimize()} aria-label="Свернуть">
+              <Glyph name="minimize" />
+            </button>
+            <button
+              className="win-btn"
+              onClick={() => wc.toggleMaximize()}
+              aria-label={maximized ? 'Восстановить' : 'Развернуть'}
+            >
+              <Glyph name={maximized ? 'restore' : 'maximize'} />
+            </button>
+            <button className="win-btn win-close" onClick={() => wc.close()} aria-label="Закрыть">
+              <Glyph name="close" />
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 };

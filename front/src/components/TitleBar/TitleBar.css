@@ -45,6 +45,11 @@
   color: var(--text);
 }
 
+.tb-settings {
+  margin-right: 8px;
+  border-right: 1px solid var(--line);
+}
+
 .win-btn.win-close:hover {
   background: #c42b1c;
   color: #fff;

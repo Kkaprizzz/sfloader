@@ -1,79 +1,76 @@
+@import '@fontsource-variable/ibm-plex-sans/wght.css';
+
 :root {
-  --bg-dark: #050507;
+  --bg: #161617;
+  --surface: #1d1d1f;
+  --surface-2: #252528;
+  --line: #2c2c30;
+  --line-strong: #3b3b41;
 
-  --accent-primary: #ffffff;
-  --accent-secondary: #cfcfd6;
+  --text: #e8e8ea;
+  --text-2: #a0a0a8;
+  --text-3: #80808a;
 
-  --glass-bg: rgba(255, 255, 255, 0.04);
-  --glass-bg-strong: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-border-hover: rgba(255, 255, 255, 0.28);
-  --glass-blur: blur(18px) saturate(140%);
+  --accent: #3fb950;
+  --accent-ink: #06200d;
+  --danger: #f0605d;
 
-  --accent-glass: rgba(255, 255, 255, 0.10);
-  --accent-glass-hover: rgba(255, 255, 255, 0.16);
-  --accent-glass-border: rgba(255, 255, 255, 0.22);
+  --radius: 4px;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --t-ui: 150ms;
 
-  --glow-soft: rgba(255, 255, 255, 0.045);
-  --glow-faint: rgba(255, 255, 255, 0.02);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
 }
 
 body {
   margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background-color: var(--bg-dark);
-  color: white;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    radial-gradient(circle at 80% 20%, var(--glow-soft), transparent 40%),
-    radial-gradient(circle at 20% 80%, var(--glow-faint), transparent 40%);
-
-  background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%;
-  background-attachment: fixed;
-
-  position: relative;
-  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans Variable', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 50%);
-  z-index: -1;
-  animation: pulseGlow 10s infinite alternate ease-in-out;
-  pointer-events: none;
+button,
+input {
+  font: inherit;
+  color: inherit;
 }
 
-@keyframes pulseGlow {
-  0% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(1.5);
-    opacity: 1;
-  }
+button {
+  cursor: pointer;
 }
 
-#root {
-  position: relative;
-  z-index: 1;
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 1px;
 }
 
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  display: none;
+::selection {
+  background: rgba(63, 185, 80, 0.35);
 }
 
 * {
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

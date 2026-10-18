@@ -1,91 +1,51 @@
 .titlebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 44px;
-  z-index: 2000;
+  flex: none;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 8px 0 20px;
+  padding-left: 20px;
+  border-bottom: 1px solid var(--line);
   -webkit-app-region: drag;
   user-select: none;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid var(--glass-border);
 }
 
 .titlebar-brand {
-  font-size: 0.95rem;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-  text-transform: lowercase;
-  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-2);
 }
 
 .titlebar-brand span {
-  color: #fff;
-}
-
-.titlebar-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  -webkit-app-region: no-drag;
-}
-
-.tb-support {
-  background: none;
-  border: none;
-  padding: 0;
-  color: rgba(255, 255, 255, 0.6);
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.tb-support:hover {
-  color: #fff;
-}
-
-.tb-divider {
-  width: 1px;
-  height: 18px;
-  background: var(--glass-border);
+  color: var(--accent);
 }
 
 .win-controls {
   display: flex;
-  gap: 6px;
+  height: 100%;
+  -webkit-app-region: no-drag;
 }
 
 .win-btn {
-  width: 32px;
-  height: 26px;
+  width: 46px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--glass-border);
-  background: var(--glass-bg);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  color: rgba(255, 255, 255, 0.7);
-  border-radius: 9px;
-  cursor: pointer;
-  transition: 0.18s;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-2);
+  transition: background var(--t-ui) var(--ease), color var(--t-ui) var(--ease);
 }
 
 .win-btn:hover {
-  background: var(--glass-bg-strong);
-  color: #fff;
+  background: var(--surface-2);
+  color: var(--text);
 }
 
-.win-close:hover {
-  background: rgba(255, 80, 80, 0.85);
-  border-color: rgba(255, 80, 80, 0.9);
+.win-btn.win-close:hover {
+  background: #c42b1c;
   color: #fff;
 }

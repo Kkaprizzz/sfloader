@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link2, Loader2, Zap, XCircle } from 'lucide-react';
+import { useState } from 'react';
+import Icon from '../Icon';
 import './Downloader.css';
 
 const Downloader = ({ onDownload, isLoading }) => {
-  const { t } = useTranslation();
   const [url, setUrl] = useState('');
 
   const handleSubmit = (e) => {
@@ -14,39 +12,30 @@ const Downloader = ({ onDownload, isLoading }) => {
   };
 
   return (
-    <div className="main-downloader">
-      <form className="dl-form" onSubmit={handleSubmit}>
-        <div className="dl-input-container">
-          <Link2 className="dl-icon" size={18} />
-          <input
-            type="text"
-            placeholder={t('pasteLink')}
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            disabled={isLoading}
-          />
-          <XCircle
-            className={`clear-btn ${url ? 'visible' : ''}`}
-            size={20}
-            onClick={() => setUrl('')}
-          />
-        </div>
-        <button className="dl-button" type="submit" disabled={isLoading || !url}>
-          {isLoading ? (
-            <Loader2 className="dl-spinner" size={18} />
-          ) : (
-            <>
-              <span>{t('download')}</span>
-              <Zap size={16} fill="currentColor" />
-            </>
-          )}
-        </button>
-      </form>
-
-      <div className="dl-hint">
-        {t('supported')}
+    <form className="linkbar" onSubmit={handleSubmit}>
+      <div className="linkbar-field">
+        <input
+          type="text"
+          placeholder="Ссылка на видео"
+          aria-label="Ссылка на видео"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          disabled={isLoading}
+          spellCheck={false}
+        />
+        {url && !isLoading && (
+          <button type="button" className="linkbar-clear" onClick={() => setUrl('')} aria-label="Очистить">
+            <Icon name="close" size={14} />
+          </button>
+        )}
       </div>
-    </div>
+
+      <button className="linkbar-submit" type="submit" disabled={isLoading || !url}>
+        {isLoading ? 'Ищу…' : 'Найти'}
+      </button>
+
+      {isLoading && <div className="linkbar-busy" aria-hidden="true" />}
+    </form>
   );
 };
 

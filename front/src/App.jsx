@@ -1,17 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
-import { useTranslation } from 'react-i18next';
 import TitleBar from './components/TitleBar/TitleBar';
-import Hero from './components/Hero/Hero';
 import Downloader from './components/Downloader/Downloader';
-import Features from './components/Features/Features';
-import SupportModal from './components/SupportModal/SupportModal';
 import VideoResult from './components/VideoResult/VideoResult';
 import { videoService } from './api/videoService';
 
 function App() {
-  const { t } = useTranslation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [videoData, setVideoData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -25,34 +19,24 @@ function App() {
       const data = await videoService.extractInfo(url);
       setVideoData(data);
     } catch (err) {
-      setError(typeof err === 'string' ? err : err?.message || t('extractError'));
+      setError(typeof err === 'string' ? err : err?.message || 'Не удалось получить информацию о видео');
     } finally {
       setLoading(false);
     }
   };
 
+  const isEmpty = !videoData && !loading && !error;
+
   return (
-    <>
-      <TitleBar onSupportClick={() => setIsModalOpen(true)} />
-      <div className="app-container">
-      <main>
-        <Hero />
-        <Downloader onDownload={handleDownload} isLoading={loading} />
-        {error && <div className="app-error">{error}</div>}
+    <div className="app">
+      <TitleBar />
+      <Downloader onDownload={handleDownload} isLoading={loading} />
+      <main className="app-content">
+        {isEmpty && <p className="app-hint">Вставь ссылку и нажми Enter</p>}
+        {error && <div className="app-error" role="alert">{error}</div>}
         {videoData && <VideoResult data={videoData} />}
-        <Features />
       </main>
-
-      <footer className="footer">
-        <p>{t('footerText', { year: new Date().getFullYear() })}</p>
-      </footer>
-
-      <SupportModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-      </div>
-    </>
+    </div>
   );
 }
 

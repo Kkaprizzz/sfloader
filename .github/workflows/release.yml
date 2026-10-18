@@ -1,0 +1,57 @@
+# Пуш тега vX.Y.Z собирает AppImage и Windows-сборки (установщик + portable)
+# и складывает их в черновик релиза. Публикуется черновик вручную.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Черновик релиза
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 \
+            || gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --draft --title "SFLoader ${TAG#v}" --notes ""
+
+  build:
+    needs: draft
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: --linux
+          - os: windows-latest
+            target: --win
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: front
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: front/package-lock.json
+
+      - run: npm ci
+
+      - name: Свежий yt-dlp под платформу раннера
+        run: node scripts/setup-bin.mjs
+
+      - run: npm run build
+
+      - name: Сборка и загрузка в черновик
+        run: npx electron-builder ${{ matrix.target }} --publish always
+        env:
+          GH_TOKEN: ${{ github.token }}
